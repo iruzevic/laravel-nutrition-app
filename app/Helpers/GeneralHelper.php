@@ -206,6 +206,31 @@ trait GeneralHelper {
       case 'nutrients_type_delete_success':
         return 'Nutrient type succesfuly deleted!';
         break;
+      
+      case 'users_details_validation':
+        return 'Sorry, check your users details fields for validation!';
+        break;
+      case 'users_details_id_empty':
+        return 'Users details ID not provided!';
+        break;
+      case 'users_details_id_false':
+        return 'Users details with provided id doesn\'t exist!';
+        break;
+      case 'users_details_save_fail':
+        return 'Error in saving users details entry!';
+        break;
+      case 'users_details_delete_fail':
+        return 'Error in deleting users details entry!';
+        break;
+      case 'users_details_store_success':
+        return 'Users details succesfuly created!';
+        break;
+      case 'users_details_update_success':
+        return 'Users details succesfuly updated!';
+        break;
+      case 'users_details_delete_success':
+        return 'Users details succesfuly deleted!';
+        break;
 
       default:
         return false;
