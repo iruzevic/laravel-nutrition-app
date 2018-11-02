@@ -5,7 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 
-class Meals extends Model {
+class NutrientsTypes extends Model {
   protected $fillable = [
     'user_id',
     'name',
@@ -16,17 +16,17 @@ class Meals extends Model {
       'user_id'
   ];
 
-  protected static function get_meal( $id )  {
+  protected static function get_nutrients_type( $id )  {
     return
-        Meals::select('*')
+        NutrientsTypes::select('*')
         ->where('user_id', Auth::user()->id)
         ->where('id', $id)
         ->first();
   }
 
-  protected static function get_meals()  {
-    return
-        Meals::select('*')
-        ->where('user_id', Auth::user()->id);
-  }
+  // protected static function get_nutrients_types()  {
+  //   return
+  //       NutrientsTypes::select('*')
+  //       ->where('user_id', Auth::user()->id);
+  // }
 }

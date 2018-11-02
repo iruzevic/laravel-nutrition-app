@@ -25,8 +25,8 @@ class CreateNutrientsTable extends Migration
             $table->float('sugar');
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users');
-            $table->integer('nutrients_type_id')->unsigned();
-            $table->foreign('nutrients_type_id')->references('id')->on('nutrients_type');
+            $table->integer('nutrients_types_id')->unsigned();
+            $table->foreign('nutrients_types_id')->references('id')->on('nutrients_types');
             $table->timestamps();
         });
     }

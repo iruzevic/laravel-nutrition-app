@@ -3,61 +3,33 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
-class Entries extends Model
-{
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
+class Entries extends Model {
+  protected $fillable = [
+    'user_id',
+    'date',
+    'amount',
+    'meals_id',
+    'nutrients_id',
+    'created_at'
+  ];
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
+  protected $hidden = [
+      'user_id'
+  ];
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
+  protected static function get_entry( $id )  {
+    return
+      Entries::select('*')
+        ->where('user_id', Auth::user()->id)
+        ->where('id', $id)
+        ->first();
+  }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
+  protected static function get_entries()  {
+    return
+      Entries::select('*')
+        ->where('user_id', Auth::user()->id);
+  }
 }

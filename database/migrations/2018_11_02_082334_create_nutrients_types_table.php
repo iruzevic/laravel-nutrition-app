@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateNutrientsTypeTable extends Migration
+class CreateNutrientsTypesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateNutrientsTypeTable extends Migration
      */
     public function up()
     {
-        Schema::create('nutrients_type', function (Blueprint $table) {
+        Schema::create('nutrients_types', function (Blueprint $table) {
           $table->increments('id');
           $table->string('name');
           $table->integer('user_id')->unsigned();
@@ -29,6 +29,6 @@ class CreateNutrientsTypeTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('nutrients_type');
+        Schema::dropIfExists('nutrients_types');
     }
 }

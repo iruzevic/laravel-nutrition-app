@@ -85,6 +85,9 @@ trait GeneralHelper {
       case 'error':
         return 400;
         break;
+      case 'not-found':
+        return 404;
+        break;
       case 'success':
         return 200;
         break;
@@ -102,14 +105,10 @@ trait GeneralHelper {
       case 'register_validation':
         return 'Sorry, check your registration fields for validation!';
         break;
+
+
       case 'meals_validation':
         return 'Sorry, check your meals fields for validation!';
-        break;
-      case 'meals_save_fail':
-        return 'Error in saving meal entry!';
-        break;
-      case 'meals_store_success':
-        return 'Meal succesfuly created!';
         break;
       case 'meals_id_empty':
         return 'Meal ID not provided!';
@@ -117,10 +116,97 @@ trait GeneralHelper {
       case 'meals_id_false':
         return 'Meal with provided id doesn\'t exist!';
         break;
+      case 'meals_save_fail':
+        return 'Error in saving meal entry!';
+        break;
+      case 'meals_delete_fail':
+        return 'Error in deleting meal entry!';
+        break;
+      case 'meals_store_success':
+        return 'Meal succesfuly created!';
+        break;
       case 'meals_update_success':
         return 'Meal succesfuly updated!';
         break;
-      
+      case 'meals_delete_success':
+        return 'Meal succesfuly deleted!';
+        break;
+
+      case 'entries_validation':
+        return 'Sorry, check your entries fields for validation!';
+        break;
+      case 'entries_id_empty':
+        return 'Entry ID not provided!';
+        break;
+      case 'entries_id_false':
+        return 'Entry with provided id doesn\'t exist!';
+        break;
+      case 'entries_save_fail':
+        return 'Error in saving entry!';
+        break;
+      case 'entries_delete_fail':
+        return 'Error in deleting entry!';
+        break;
+      case 'entries_store_success':
+        return 'Entry succesfuly created!';
+        break;
+      case 'entries_update_success':
+        return 'Entry succesfuly updated!';
+        break;
+      case 'entries_delete_success':
+        return 'Entry succesfuly deleted!';
+        break;
+
+      case 'nutrients_validation':
+        return 'Sorry, check your nutrients fields for validation!';
+        break;
+      case 'nutrients_id_empty':
+        return 'Nutrient ID not provided!';
+        break;
+      case 'nutrients_id_false':
+        return 'Nutrient with provided id doesn\'t exist!';
+        break;
+      case 'nutrients_save_fail':
+        return 'Error in saving nutrients!';
+        break;
+      case 'nutrients_delete_fail':
+        return 'Error in deleting nutrients!';
+        break;
+      case 'nutrients_store_success':
+        return 'Nutrient succesfuly created!';
+        break;
+      case 'nutrients_update_success':
+        return 'Nutrient succesfuly updated!';
+        break;
+      case 'nutrients_delete_success':
+        return 'Nutrient succesfuly deleted!';
+        break;
+
+      case 'nutrients_type_validation':
+        return 'Sorry, check your nutrients type fields for validation!';
+        break;
+      case 'nutrients_type_id_empty':
+        return 'Nutrient type ID not provided!';
+        break;
+      case 'nutrients_type_id_false':
+        return 'Nutrient type with provided id doesn\'t exist!';
+        break;
+      case 'nutrients_type_save_fail':
+        return 'Error in saving nutrients type!';
+        break;
+      case 'nutrients_type_delete_fail':
+        return 'Error in deleting nutrients type!';
+        break;
+      case 'nutrients_type_store_success':
+        return 'Nutrient type succesfuly created!';
+        break;
+      case 'nutrients_type_update_success':
+        return 'Nutrient type succesfuly updated!';
+        break;
+      case 'nutrients_type_delete_success':
+        return 'Nutrient type succesfuly deleted!';
+        break;
+
       default:
         return false;
         break;

@@ -21,6 +21,6 @@ Route::group(['middleware' => 'auth:api'], function(){
 
   Route::resource('meals', 'MealsController', array('only' => array('index', 'store', 'show', 'update', 'destroy')));
   Route::resource('nutrients', 'NutrientsController', array('only' => array('index', 'store', 'show', 'update', 'destroy')));
-  Route::resource('nutrientsTypes', 'NutrientsTypeController', array('only' => array('index', 'store', 'show', 'update', 'destroy')));
+  Route::resource('nutrients-types', 'NutrientsTypesController', array('only' => array('index', 'store', 'show', 'update', 'destroy')));
   Route::resource('entries', 'EntriesController', array('only' => array('index', 'store', 'show', 'update', 'destroy')));
 });

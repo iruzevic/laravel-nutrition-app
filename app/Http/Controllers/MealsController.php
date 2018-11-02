@@ -16,8 +16,7 @@ class MealsController extends Controller {
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
+    public function index() {
         //
     }
 
@@ -27,8 +26,7 @@ class MealsController extends Controller {
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
+    public function store( Request $request ) {
       $rules = array(
         'name'   => 'required',
       );
@@ -38,12 +36,12 @@ class MealsController extends Controller {
         return $this->get_error_json_msg( 'validation', 'meals_validation', $validator->errors() );
       }
 
-      $meals          = new Meals();
-      $meals->user_id = Auth::user()->id;
-      $meals->name    = $request->input('name');
+      $meal          = new Meals();
+      $meal->user_id = Auth::user()->id;
+      $meal->name    = $request->input('name');
 
       try {
-        $meals->save();
+        $meal->save();
       } catch ( \Illuminate\Database\QueryException $e) {
         return $this->get_error_json_msg( 'error', 'meals_save_fail', $e );
       }
@@ -57,9 +55,18 @@ class MealsController extends Controller {
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
-    {
-        //
+    public function show( $id ) {
+      if( ! $id ) {
+        return $this->get_error_json_msg( 'validation', 'meals_id_empty' );
+      }
+
+      $meal = Meals::get_meal( $id );
+
+      if( ! $meal ) {
+        return $this->get_error_json_msg( 'not-found', 'meals_id_false' );
+      }
+
+      return $this->get_success_json_response( $meal );
     }
 
     /**
@@ -69,8 +76,7 @@ class MealsController extends Controller {
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
-    {
+    public function update(Request $request, $id) {
       $rules = array(
         'name'   => 'required',
       );
@@ -84,17 +90,17 @@ class MealsController extends Controller {
         return $this->get_error_json_msg( 'validation', 'meals_id_empty' );
       }
 
-      $meals = Meals::get_meals( $id );
+      $meal = Meals::get_meal( $id );
 
-      if( ! $meals ) {
-        return $this->get_error_json_msg( 'error', 'meals_id_false' );
+      if( ! $meal ) {
+        return $this->get_error_json_msg( 'not-found', 'meals_id_false' );
       }
 
-      $meals->user_id = Auth::user()->id;
-      $meals->name    = $request->input('name');
+      $meal->user_id = Auth::user()->id;
+      $meal->name    = $request->input('name');
 
       try {
-        $meals->save();
+        $meal->save();
       } catch ( \Illuminate\Database\QueryException $e) {
         return $this->get_error_json_msg( 'error', 'meals_save_fail', $e );
       }
@@ -108,8 +114,23 @@ class MealsController extends Controller {
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
-    {
-        //
+    public function destroy($id) {
+      if( ! $id ) {
+        return $this->get_error_json_msg( 'validation', 'meals_id_empty' );
+      }
+
+      $meal = Meals::get_meal( $id );
+
+      if( ! $meal ) {
+        return $this->get_error_json_msg( 'not-found', 'meals_id_false' );
+      }
+
+      try {
+        $meal->delete();
+      } catch ( \Illuminate\Database\QueryException $e) {
+        return $this->get_error_json_msg( 'error', 'meals_delete_fail', $e );
+      }
+
+      return $this->get_success_json_msg( 'meals_delete_success' );
     }
 }
