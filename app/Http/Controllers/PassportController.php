@@ -28,7 +28,7 @@ class PassportController extends Controller {
     $validator = Validator::make( $request->all(), $rules );
 
     if ( $validator->fails() ) {
-      return $this->get_error_json_msg( 'error', 'validation', 'register_validation', $validator->errors() );
+      return $this->get_error_json_msg( 'validation', 'register_validation', $validator->errors() );
     }
 
     $input = $request->all();
@@ -36,7 +36,7 @@ class PassportController extends Controller {
     $user = User::create($input);
     $success['token'] =  $user->createToken('MyApp')->accessToken;
     $success['name'] =  $user->name;
-    return $this->get_success_json_msg( $success );
+    return $this->get_success_json_response( $success );
   }
 
   /**
@@ -51,13 +51,13 @@ class PassportController extends Controller {
     ];
 
     if ( ! Auth::attempt( $fields ) ){
-        return $this->get_error_json_msg( 'error', 'unauth', 'login_unauth' );
+        return $this->get_error_json_msg( 'unauth', 'login_unauth' );
     }
 
     $user = Auth::user();
     $success['token'] =  $user->createToken('MyApp')->accessToken;
 
-    return $this->get_success_json_msg( $success );
+    return $this->get_success_json_response( $success );
   }
 
   /**
@@ -67,6 +67,6 @@ class PassportController extends Controller {
    */
   public function getDetails() {
     $user = Auth::user();
-    return $this->get_success_json_msg( $user );
+    return $this->get_success_json_response( $user );
   }
 }

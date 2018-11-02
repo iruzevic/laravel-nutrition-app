@@ -11,32 +11,21 @@ trait GeneralHelper {
     * @param boolean $errors
     * @return void
     */
-  protected function get_error_json_msg( $status, $code, $msg, $errors = false ) {
-    
-    if ( ! ( $status || $msg ) ) {
+  protected function get_error_json_msg( $code, $msg, $errors = false ) {
+    if ( ! ( $msg || $code ) ) {
       return false;
     }
 
-    $msg_array = array();
+    $status_code = $this->get_json_status_codes( $code );
 
-    if ( $status ) {
-        $msg_array['status'] = $status;
-    }
+    $error_output = array(
+      'status' => 'error',
+      'code'   => $status_code,
+      'msg'    => $this->get_response_msg( $msg ),
+      'errors' => $errors,
+    );
 
-    if ( $code ) {
-        $status_code = $this->get_json_status_codes( $code );
-        $msg_array['code'] = $status_code;
-    }
-
-    if ( $msg ) {
-        $msg_array['msg'] = $this->get_response_msg( $msg );
-    }
-
-    if ( $errors ) {
-        $msg_array['errors'] = $errors;
-    }
-    
-    return response()->json( [ $msg_array ], $status_code );
+    return response()->json( $error_output, $status_code );
   }
 
   /**
@@ -47,7 +36,32 @@ trait GeneralHelper {
     * @param boolean $errors
     * @return void
     */
-  protected function get_success_json_msg( $response ) {
+  protected function get_success_json_msg( $msg ) {
+    if ( ! $msg ) {
+      return false;
+    }
+
+    $status_code = $this->get_json_status_codes( 'success' );
+
+    $success_output = array(
+      'status' => 'success',
+      'code'   => $status_code,
+      'msg'    => $this->get_response_msg( $msg ),
+    );
+
+    
+    return response()->json( $success_output, $status_code );
+  }
+
+  /**
+   * Return JSON Message
+   *
+    * @param [type] $status
+    * @param [type] $message
+    * @param boolean $errors
+    * @return void
+    */
+  protected function get_success_json_response( $response ) {
     
     if ( ! ( $response ) ) {
       return false;
@@ -68,6 +82,9 @@ trait GeneralHelper {
       case 'unauth':
         return 401;
         break;
+      case 'error':
+        return 400;
+        break;
       case 'success':
         return 200;
         break;
@@ -83,10 +100,25 @@ trait GeneralHelper {
         return 'Sorry, you are not authorized!';
         break;
       case 'register_validation':
-        return 'Sorry, check your fields for validation!';
+        return 'Sorry, check your registration fields for validation!';
         break;
-      case 'meals_store_validation':
-        return 'Sorry, check your fields for validation!';
+      case 'meals_validation':
+        return 'Sorry, check your meals fields for validation!';
+        break;
+      case 'meals_save_fail':
+        return 'Error in saving meal entry!';
+        break;
+      case 'meals_store_success':
+        return 'Meal succesfuly created!';
+        break;
+      case 'meals_id_empty':
+        return 'Meal ID not provided!';
+        break;
+      case 'meals_id_false':
+        return 'Meal with provided id doesn\'t exist!';
+        break;
+      case 'meals_update_success':
+        return 'Meal succesfuly updated!';
         break;
       
       default:
