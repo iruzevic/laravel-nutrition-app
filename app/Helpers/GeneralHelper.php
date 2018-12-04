@@ -102,6 +102,9 @@ trait GeneralHelper {
       case 'login_unauth':
         return 'Sorry, you are not authorized!';
         break;
+      case 'login_validation':
+        return 'Sorry, check your login fields for validation!';
+        break;
       case 'register_validation':
         return 'Sorry, check your registration fields for validation!';
         break;

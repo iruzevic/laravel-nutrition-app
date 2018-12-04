@@ -25,15 +25,15 @@ class PassportController extends Controller {
       'password'   => 'required',
       'c_password' => 'required|same:password',
     );
-    $validator = Validator::make( $request->all(), $rules );
+    $data = $request->json()->all();
+    $validator = Validator::make( $data, $rules );
 
     if ( $validator->fails() ) {
       return $this->get_error_json_msg( 'validation', 'register_validation', $validator->errors() );
     }
 
-    $input = $request->all();
-    $input['password'] = bcrypt($input['password']);
-    $user = User::create($input);
+    $data['password'] = bcrypt($data['password']);
+    $user = User::create($data);
     $success['token'] =  $user->createToken('MyApp')->accessToken;
     $success['name'] =  $user->name;
     return $this->get_success_json_response( $success );
@@ -42,19 +42,28 @@ class PassportController extends Controller {
   /**
    * Login user and return access token.
    *
+   * @param Request $request
    * @return void
    */
-  public function login() {
-    $fields = [
-      'email'    => request('email'),
-      'password' => request('password')
-    ];
+  public function login(Request $request) {
+    $rules = array(
+      'email'      => 'required|email',
+      'password'   => 'required',
+    );
 
-    if ( ! Auth::attempt( $fields ) ){
-        return $this->get_error_json_msg( 'unauth', 'login_unauth' );
+    $data = $request->json()->all();
+    $validator = Validator::make( $data, $rules );
+
+    if ( $validator->fails() ) {
+      return $this->get_error_json_msg( 'validation', 'login_validation' );
+    }
+
+    if ( ! Auth::attempt( $data ) ){
+      return $this->get_error_json_msg( 'unauth', 'login_unauth' );
     }
 
     $user = Auth::user();
+
     $success['token'] =  $user->createToken('MyApp')->accessToken;
 
     return $this->get_success_json_response( $success );
